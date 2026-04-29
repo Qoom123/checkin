@@ -48,18 +48,15 @@
       border-radius: 12px;
       font-weight: bold;
     }
-    .warning {
-      color: red;
+    .guide {
       font-size: 16px;
-      margin-bottom: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .notice {
-      font-size: 16px;
-      color: #666;
       margin-top: 16px;
-      line-height: 1.5;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .highlight {
+      color: red;
+      font-weight: bold;
     }
     .success {
       display: none;
@@ -96,14 +93,11 @@
       style="display:none;"
     >
 
-    <div class="warning">
-      ※ 위치권한 허용이 필요합니다
-    </div>
-
     <button id="submitBtn" onclick="sendLocation()">등록하기</button>
 
-    <div class="notice">
-      위치 권한을 허용하면 현재 위치와 시간이 자동으로 등록됩니다.
+    <div class="guide">
+      등록하기를 누르고 <span class="highlight">위치권한을 허용</span> 해야<br>
+      장소와 시간이 자동으로 등록됩니다
     </div>
 
     <div id="successMsg" class="success">
