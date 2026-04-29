@@ -2,25 +2,96 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>외근 위치 등록</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 24px;
+      background-color: #f5f5f5;
+      font-size: 20px;
+    }
+
+    .box {
+      max-width: 520px;
+      margin: 0 auto;
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 22px;
+      padding: 16px;
+      margin-top: 8px;
+      margin-bottom: 22px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      width: 100%;
+      font-size: 24px;
+      padding: 18px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .notice {
+      font-size: 16px;
+      color: #666;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>외근 위치 등록</h2>
-  <p>이름과 부서를 입력 후 버튼을 눌러주세요.</p>
+  <div class="box">
+    <h2>외근 위치 등록</h2>
 
-  <label>이름</label><br>
-  <input type="text" id="name" placeholder="홍길동"><br><br>
+    <label>이름</label>
+    <input type="text" id="name" placeholder="홍길동">
 
-  <label>부서명</label><br>
-  <input type="text" id="dept" placeholder="경영지원팀"><br><br>
+    <label>부서명</label>
+    <input type="text" id="dept" placeholder="경영지원팀">
 
-  <button onclick="sendLocation()">외근 위치 등록</button>
+    <label>사유</label>
+    <select id="reason">
+      <option value="현지 출근">현지 출근</option>
+      <option value="현지 퇴근">현지 퇴근</option>
+    </select>
+
+    <button onclick="sendLocation()">등록하기</button>
+
+    <div class="notice">
+      위치 권한을 허용하면 현재 위치와 시간이 자동으로 등록됩니다.
+    </div>
+  </div>
 
   <script>
     function sendLocation() {
-
       const name = document.getElementById("name").value.trim();
       const dept = document.getElementById("dept").value.trim();
+      const reason = document.getElementById("reason").value;
 
       if (!name) {
         alert("이름을 입력해주세요.");
@@ -38,29 +109,25 @@
       }
 
       navigator.geolocation.getCurrentPosition(function(position) {
-
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         const time = new Date().toLocaleString("ko-KR");
         const map = "https://maps.google.com/?q=" + lat + "," + lng;
 
         const formUrl =
-        "https://docs.google.com/forms/d/e/1FAIpQLSfvt-GqGTLzkr7pKssCzMqZAtAPfJ7XMPY775jb7HNmBtqQzA/formResponse"
-        + "?entry.1948472607=" + encodeURIComponent(name)
-        + "&entry.397682399=" + encodeURIComponent(dept)
-        + "&entry.1426782982=" + encodeURIComponent(lat)
-        + "&entry.2142479403=" + encodeURIComponent(lng)
-        + "&entry.121791788=" + encodeURIComponent(time)
-        + "&entry.1632520187=" + encodeURIComponent(map)
-        + "&submit=Submit";
+          "https://docs.google.com/forms/d/e/1FAIpQLSfvt-GqGTLzkr7pKssCzMqZAtAPfJ7XMPY775jb7HNmBtqQzA/formResponse"
+          + "?entry.1948472607=" + encodeURIComponent(name)
+          + "&entry.397682399=" + encodeURIComponent(dept)
+          + "&entry.2142479403=" + encodeURIComponent(reason)
+          + "&entry.121791788=" + encodeURIComponent(time)
+          + "&entry.1632520187=" + encodeURIComponent(map)
+          + "&submit=Submit";
 
         window.location.href = formUrl;
-
       }, function(error) {
-        alert("위치 권한을 허용해야 합니다.");
+        alert("위치 권한을 허용해야 등록할 수 있습니다.");
       });
     }
   </script>
-
 </body>
 </html>
