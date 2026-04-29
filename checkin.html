@@ -6,12 +6,31 @@
 </head>
 <body>
   <h2>외근 위치 등록</h2>
-  <p>버튼을 누르면 자동으로 전송됩니다.</p>
+  <p>이름과 부서를 입력 후 버튼을 눌러주세요.</p>
 
-  <button onclick="sendLocation()">출근 / 외근 등록</button>
+  <label>이름</label><br>
+  <input type="text" id="name" placeholder="홍길동"><br><br>
+
+  <label>부서명</label><br>
+  <input type="text" id="dept" placeholder="경영지원팀"><br><br>
+
+  <button onclick="sendLocation()">외근 위치 등록</button>
 
   <script>
     function sendLocation() {
+
+      const name = document.getElementById("name").value.trim();
+      const dept = document.getElementById("dept").value.trim();
+
+      if (!name) {
+        alert("이름을 입력해주세요.");
+        return;
+      }
+
+      if (!dept) {
+        alert("부서명을 입력해주세요.");
+        return;
+      }
 
       if (!navigator.geolocation) {
         alert("위치 기능을 지원하지 않습니다.");
@@ -27,15 +46,15 @@
 
         const formUrl =
         "https://docs.google.com/forms/d/e/1FAIpQLSfvt-GqGTLzkr7pKssCzMqZAtAPfJ7XMPY775jb7HNmBtqQzA/formResponse"
-        + "?entry.1948472607=%ED%99%8D%EA%B8%B8%EB%8F%99"
-        + "&entry.397682399=%EA%B2%BD%EC%98%81%EC%A7%80%EC%9B%90%ED%8C%80"
+        + "?entry.1948472607=" + encodeURIComponent(name)
+        + "&entry.397682399=" + encodeURIComponent(dept)
         + "&entry.1426782982=" + encodeURIComponent(lat)
         + "&entry.2142479403=" + encodeURIComponent(lng)
         + "&entry.121791788=" + encodeURIComponent(time)
-        + "&entry.1632520187=" + encodeURIComponent(map);
+        + "&entry.1632520187=" + encodeURIComponent(map)
+        + "&submit=Submit";
 
-        // 👉 제출 후 폼 화면 안보이게 바로 완료 메시지로 이동
-        window.location.href = formUrl + "&submit=Submit";
+        window.location.href = formUrl;
 
       }, function(error) {
         alert("위치 권한을 허용해야 합니다.");
