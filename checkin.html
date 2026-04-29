@@ -75,11 +75,19 @@
     <label>부서명</label>
     <input type="text" id="dept" placeholder="부서명 입력">
 
-    <label>사유</label>
-    <select id="reason">
-      <option value="외근도착">외근도착</option>
-      <option value="외근종료">외근종료</option>
-    </select>
+    <label>내용</label>
+<select id="reason" onchange="toggleCustomReason()">
+  <option value="외근도착">외근도착</option>
+  <option value="외근종료">외근종료</option>
+  <option value="직접입력">직접입력</option>
+</select>
+
+<input 
+  type="text" 
+  id="customReason" 
+  placeholder="사유를 직접 입력하세요" 
+  style="display:none;"
+>
 
     <button id="submitBtn" onclick="sendLocation()">등록하기</button>
 
