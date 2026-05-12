@@ -185,11 +185,15 @@
         document.getElementById("successMsg").style.display = "block";
         button.innerText = "등록 완료";
 
-      }, function(error) {
-        alert("위치 권한을 허용해야 등록할 수 있습니다.");
-        button.disabled = false;
-        button.innerText = "등록하기";
-      });
+    }, function(error) {
+  alert("위치 권한을 허용해야 등록할 수 있습니다.");
+  button.disabled = false;
+  button.innerText = "등록하기";
+}, {
+  enableHighAccuracy: true,
+  timeout: 15000,
+  maximumAge: 0
+});
     }
 
     function toggleCustomReason() {
